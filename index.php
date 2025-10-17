@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comando para discord por link by zoen21</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            margin-top: 40px;
+        }
+
+        .tournament-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .tournament-info h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .tournament-info p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .participants-list {
+            list-style: none;
+        }
+
+        .participant-item {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .participant-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .rank {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            min-width: 60px;
+            margin-right: 20px;
+        }
+
+        .rank.first {
+            color: #FFD700;
+        }
+
+        .rank.second {
+            color: #C0C0C0;
+        }
+
+        .rank.third {
+            color: #CD7F32;
+        }
+
+        .participant-name {
+            font-size: 1.1em;
+            color: #333;
+            flex-grow: 1;
+        }
+
+        .error {
+            background: #fee;
+            border: 2px solid #fcc;
+            border-radius: 8px;
+            padding: 15px;
+            color: #c33;
+            margin-top: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .info-box p {
+            color: #1976D2;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .command-output {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #45a049;
+        }
+
+        .copy-btn:active {
+            background: #3d8b40;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Comando para discord por link <br> by: zoen21 V1.0</h1>
+        
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="tournament_url">Link do Torneio Challonge:</label>
+                <input 
+                    type="text" 
+                    id="tournament_url" 
+                    name="tournament_url" 
+                    placeholder="https://challonge.com/seu_torneio"
+                    value="<?php echo isset($_POST['tournament_url']) ? htmlspecialchars($_POST['tournament_url']) : ''; ?>"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="staff_id">Staff (ID do Discord):</label>
+                <input 
+                    type="text" 
+                    id="staff_id" 
+                    name="staff_id" 
+                    placeholder="Ex: <@483764888372510730> ou apenas 483764888372510730"
+                    value="<?php echo isset($_POST['staff_id']) ? htmlspecialchars($_POST['staff_id']) : ''; ?>"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="api_key"> API Key:</label>
+                <input 
+                    type="password" 
+                    id="api_key" 
+                    name="api_key" 
+                    placeholder="Sua API key do Challonge"
+                    value="<?php echo isset($_POST['api_key']) ? htmlspecialchars($_POST['api_key']) : ''; ?>"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="disqualified_players">Jogadores com history sujo (separados por espaço):</label>
+                <input 
+                    type="text" 
+                    id="disqualified_players" 
+                    name="disqualified_players" 
+                    placeholder="Ex: Jogador1 Jogador2 vinikibaa"
+                    value="<?php echo isset($_POST['disqualified_players']) ? htmlspecialchars($_POST['disqualified_players']) : ''; ?>"
+                >
+            </div>
+            
+            <button type="submit" class="btn-submit">Buscar Classificação</button>
+        </form>
+
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['tournament_url'])) {
+            $tournament_url = $_POST['tournament_url'];
+            $api_key = !empty($_POST['api_key']) ? trim($_POST['api_key']) : null;
+            $disqualified_players_input = !empty($_POST['disqualified_players']) ? trim($_POST['disqualified_players']) : '';
+            
+            
+            $manual_disqualified_names = [];
+            if (!empty($disqualified_players_input)) {
+                
+                $manual_disqualified_names = array_filter(array_map('trim', explode(' ', $disqualified_players_input)));
+            }
+            $tournament_id = extractTournamentId($tournament_url);
+            
+            if ($tournament_id) {
+                
+                $tournament_data = fetchTournamentData($tournament_id, $api_key);
+                
+                if ($tournament_data) {
+                    displayTournamentResults($tournament_data, $manual_disqualified_names);
+                } else {
+                    if ($api_key) {
+                        echo '<div class="error"> Não foi possível obter os dados do torneio. Verifique se o link e a API key estão corretos.</div>';
+                    } else {
+                        echo '<div class="error"> Não foi possível obter os dados do torneio. Verifique se o link está correto e se o torneio é público. Para torneios privados, forneça uma API key.</div>';
+                    }
+                }
+            } else {
+                echo '<div class="error"> URL inválida. Por favor, insira um link válido do Challonge.</div>';
+            }
+        }
+
+        function extractTournamentId($url) {
+            
+            $url = trim($url);
+            
+            
+            $patterns = [
+                '/challonge\.com\/[a-z]{2}_[A-Z]{2}\/([a-zA-Z0-9_-]+)/',  
+                '/challonge\.com\/[a-z]{2}\/([a-zA-Z0-9_-]+)/',           
+                '/challonge\.com\/([a-zA-Z0-9_-]+)/',                      
+            ];
+            
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $url, $matches)) {
+                    return $matches[1];
+                }
+            }
+            
+            return false;
+        }
+
+        function fetchTournamentData($tournament_id, $api_key = null) {
+            
+            if ($api_key) {
+                $api_url = "https://api.challonge.com/v1/tournaments/{$tournament_id}.json?api_key={$api_key}";
+                $participants_url = "https://api.challonge.com/v1/tournaments/{$tournament_id}/participants.json?api_key={$api_key}";
+            } else {
+                $api_url = "https://api.challonge.com/v1/tournaments/{$tournament_id}.json";
+                $participants_url = "https://api.challonge.com/v1/tournaments/{$tournament_id}/participants.json";
+            }
+            
+            
+            $options = [
+                'http' => [
+                    'method' => 'GET',
+                    'header' => 'User-Agent: PHP Challonge Client',
+                    'timeout' => 10,
+                    'ignore_errors' => true
+                ]
+            ];
+            
+            $context = stream_context_create($options);
+            $response = @file_get_contents($api_url, false, $context);
+            
+            if ($response === false) {
+                
+                $participants_response = @file_get_contents($participants_url, false, $context);
+                
+                if ($participants_response === false) {
+                    return false;
+                }
+                
+                $participants = json_decode($participants_response, true);
+                
+                if (!$participants || !is_array($participants)) {
+                    return false;
+                }
+                
+                return [
+                    'tournament' => [
+                        'name' => $tournament_id,
+                        'url' => "https://challonge.com/{$tournament_id}",
+                        'participants_count' => count($participants)
+                    ],
+                    'participants' => $participants
+                ];
+            }
+            
+            $tournament = json_decode($response, true);
+            
+            if (!$tournament || !isset($tournament['tournament'])) {
+                return false;
+            }
+            
+            
+            $participants_response = @file_get_contents($participants_url, false, $context);
+            
+            if ($participants_response === false) {
+                return false;
+            }
+            
+            $participants = json_decode($participants_response, true);
+            
+            if (!$participants || !is_array($participants)) {
+                return false;
+            }
+            
+            if ($api_key) {
+                $matches_url = "https://api.challonge.com/v1/tournaments/{$tournament_id}/matches.json?api_key={$api_key}";
+            } else {
+                $matches_url = "https://api.challonge.com/v1/tournaments/{$tournament_id}/matches.json";
+            }
+            
+            $matches_response = @file_get_contents($matches_url, false, $context);
+            $matches = [];
+            
+            if ($matches_response !== false) {
+                $matches = json_decode($matches_response, true);
+                if (!is_array($matches)) {
+                    $matches = [];
+                }
+            }
+            
+            return [
+                'tournament' => $tournament['tournament'],
+                'participants' => $participants,
+                'matches' => $matches
+            ];
+        }
+
+        function escapeUnderscoresForDiscord($name) {
+            if (empty($name)) {
+                return $name;
+            }
+            
+            $result = '';
+            $length = strlen($name);
+            
+            for ($i = 0; $i < $length; $i++) {
+                if ($name[$i] === '_' && $i < $length - 1) {
+                    
+                    $result .= '\\' . '_';
+                } else {
+                    
+                    $result .= $name[$i];
+                }
+            }
+            
+            return $result;
+        }
+        
+        function parseTournamentName($tournamentName) {
+            $info = [
+                'tipo' => 'Diário',
+                'tier' => '',
+                'servidor' => ''
+            ];
+            
+            
+            if (preg_match('/Semanal/i', $tournamentName)) {
+                $info['tipo'] = 'Semanal';
+            }
+            
+            
+            if (preg_match('/Torneio\s+(?:Diario|Semanal)\s+(.+?)\s+-/', $tournamentName, $matches)) {
+                $info['tier'] = trim($matches[1]);
+            }
+            
+            
+            if (preg_match('/-\s+([^-]+?)\s+-/', $tournamentName, $matches)) {
+                $info['servidor'] = trim($matches[1]);
+            }
+            
+            return $info;
+        }
+        
+        function displayTournamentResults($data, $manual_disqualified_names = []) {
+            $tournament = $data['tournament'];
+            $participants = $data['participants'];
+            $matches = $data['matches'] ?? [];
+            
+            
+            $disqualifiedParticipants = [];
+            
+            foreach ($matches as $match) {
+                $m = $match['match'];
+                
+                
+                $scoresCSV = $m['scores_csv'] ?? '';
+                
+                if (!empty($scoresCSV)) {
+                    
+                    $player1_id = $m['player1_id'] ?? null;
+                    $player2_id = $m['player2_id'] ?? null;
+                    $scoresCSV = trim($scoresCSV);
+                    if (preg_match('/^(-?\d+)-(-?\d+)$/', $scoresCSV, $matches_scores)) {
+                        $score1 = intval($matches_scores[1]);
+                        $score2 = intval($matches_scores[2]);
+                        
+                        
+                        if (($score1 == -1 || $score1 == -2) && $player1_id) {
+                            $disqualifiedParticipants[] = $player1_id;
+                        }
+                        if (($score2 == -1 || $score2 == -2) && $player2_id) {
+                            $disqualifiedParticipants[] = $player2_id;
+                        }
+                    }
+                }
+            }
+            $disqualifiedParticipants = array_unique($disqualifiedParticipants);
+            $manual_disqualified_names_lower = array_map('strtolower', $manual_disqualified_names);
+            usort($participants, function($a, $b) {
+                $rank_a = $a['participant']['final_rank'] ?? 999999;
+                $rank_b = $b['participant']['final_rank'] ?? 999999;
+                return $rank_a - $rank_b;
+            });
+            
+            
+            $tournamentName = $tournament['name'] ?? '';
+            $tournamentInfo = parseTournamentName($tournamentName);
+            $tournamentUrl = $tournament['url'] ?? '';
+            
+            
+            if (!preg_match('/^https?:\/\//', $tournamentUrl)) {
+                $tournamentUrl = 'https://challonge.com/' . $tournamentUrl;
+            }
+            
+            
+            date_default_timezone_set('America/Sao_Paulo');
+            $currentDate = date('d/m');
+            
+            
+            $primeiro = '';
+            $segundo = '';
+            $terceiro = '';
+            $outrosParticipantes = [];
+            
+            
+            $autoDisqualifiedNames = [];
+            $manualDisqualifiedNames = [];
+            
+            foreach ($participants as $participant) {
+                $p = $participant['participant'];
+                $rank = $p['final_rank'] ?? 999999;
+                $participantId = $p['id'] ?? null;
+                $originalName = $p['display_name'] ?? $p['name'] ?? 'Participante Desconhecido';
+                $name = escapeUnderscoresForDiscord($originalName);
+                $isAutoDisqualified = in_array($participantId, $disqualifiedParticipants);
+                $isManualDisqualified = in_array(strtolower($originalName), $manual_disqualified_names_lower);
+                
+                $isDisqualified = $isAutoDisqualified || $isManualDisqualified;
+                
+                
+                if ($isAutoDisqualified) {
+                    $autoDisqualifiedNames[] = $name;
+                }
+                if ($isManualDisqualified) {
+                    $manualDisqualifiedNames[] = $name;
+                }
+                
+                
+                if ($isDisqualified) {
+                    $name = "~~{$name}~~";
+                }
+                
+                if ($rank == 1) {
+                    $primeiro = $name;
+                } elseif ($rank == 2) {
+                    $segundo = $name;
+                } elseif ($rank == 3) {
+                    $terceiro = $name;
+                } else {
+                    
+                    if (!$isDisqualified) {
+                        $outrosParticipantes[] = $name;
+                    }
+                }
+            }
+            
+            
+            $comando = "/torneio finalizar tipo:{$tournamentInfo['tipo']} servidor:{$tournamentInfo['servidor']} tier: {$tournamentInfo['tier']} tabela: {$tournamentUrl} primeiro: {$primeiro} segundo: {$segundo} terceiro: {$terceiro} staff: <@483764888372510730> data: {$currentDate}";
+            
+            
+            if (strtolower($tournamentInfo['tipo']) === 'diário') {
+                if (!empty($outrosParticipantes)) {
+                    $participantesTexto = implode(' ', $outrosParticipantes);
+                    $comando .= " participantes: {$participantesTexto}";
+                } else {
+                    $comando .= " participantes: N/A";
+                }
+            }
+            
+            echo '<div class="results">';
+            echo '<div class="tournament-info">';
+            echo '<h2>Comando Gerado</h2>';
+            echo '</div>';
+            
+            echo '<div class="command-output" id="commandOutput">' . htmlspecialchars($comando) . '</div>';
+            
+            echo '<button class="copy-btn" onclick="copyCommand()">Copiar Comando</button>';
+            
+            
+            if (!empty($autoDisqualifiedNames) || !empty($manualDisqualifiedNames)) {
+                echo '<div style="margin-top: 20px; padding: 20px; background: #f5f5f5; border: 2px solid #9c27b0; border-radius: 8px;">';
+                echo '<h3 style="color: #6a1b9a; margin-bottom: 15px;">Jogadores Desqualificados</h3>';
+                
+                if (!empty($autoDisqualifiedNames)) {
+                    echo '<div style="margin-bottom: 12px;">';
+                    echo '<p style="color: #d32f2f; font-weight: 600; margin-bottom: 5px;"> Dc ou Wo:</p>';
+                    echo '<p style="color: #424242; font-size: 0.95em; margin-left: 20px;">' . implode(', ', $autoDisqualifiedNames) . '</p>';
+                    echo '</div>';
+                }
+                
+                if (!empty($manualDisqualifiedNames)) {
+                    echo '<div>';
+                    echo '<p style="color: #1976d2; font-weight: 600; margin-bottom: 5px;"> historys Sujos:</p>';
+                    echo '<p style="color: #424242; font-size: 0.95em; margin-left: 20px;">' . implode(', ', $manualDisqualifiedNames) . '</p>';
+                    echo '</div>';
+                }
+                
+                echo '</div>';
+            }
+            
+            echo '</div>';
+        }
+        ?>
+    </div>
+
+    <script>
+        function copyCommand() {
+            const commandText = document.getElementById("commandOutput").textContent;
+            
+            
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(commandText).then(function() {
+                    const btn = document.querySelector(".copy-btn");
+                    const originalText = btn.textContent;
+                    btn.textContent = "Copiado!";
+                    setTimeout(function() {
+                        btn.textContent = originalText;
+                    }, 2000);
+                }).catch(function(err) {
+                    
+                    copyToClipboardFallback(commandText);
+                });
+            } else {
+                
+                copyToClipboardFallback(commandText);
+            }
+        }
+        
+        function copyToClipboardFallback(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                const btn = document.querySelector(".copy-btn");
+                const originalText = btn.textContent;
+                btn.textContent = "Copiado!";
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                }, 2000);
+            } catch (err) {
+                alert("Erro ao copiar. Por favor, copie manualmente.");
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
